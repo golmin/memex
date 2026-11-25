@@ -18,6 +18,18 @@ except ImportError:
     _md = None
 
 
+def render_body(body: str) -> str:
+    if _md:
+        normalized = re.sub(r'(?<!\$)\$\$(.+?)\$\$(?!\$)', r'\n$$\n\1\n$$\n', body)
+        return _md(normalized)
+    escaped = (
+        body.replace("&", "&amp;")
+        .replace("<", "&lt;")
+        .replace(">", "&gt;")
+    )
+    return "<pre>" + escaped + "</pre>"
+
+
 def build(repo_root: Path, output: Path) -> None:
     kb_dir = repo_root / "knowledge"
     if not kb_dir.exists():
@@ -30,7 +42,9 @@ def build(repo_root: Path, output: Path) -> None:
     backlinks: dict[str, list[dict]] = defaultdict(list)
 
     entries = []
-    for md_path in sorted(kb_dir.glob("*.md")):
+    for md_path in sorted(kb_dir.rglob("*.md")):
+        if "assets" in md_path.relative_to(kb_dir).parts:
+            continue
         entry = parse_entry(md_path, repo_root)
         if entry:
             entries.append(entry)
@@ -45,10 +59,7 @@ def build(repo_root: Path, output: Path) -> None:
             })
 
     for entry in entries:
-        body_html = ""
-        if _md:
-            body = re.sub(r'(?<!\$)\$\$(.+?)\$\$(?!\$)', r'\n$$\n\1\n$$\n', entry.body)
-            body_html = _md(body)
+        body_html = render_body(entry.body)
 
         entry_backlinks = backlinks.get(entry.path, [])
 

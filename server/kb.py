@@ -246,7 +246,9 @@ class KnowledgeBase:
         if not kb_dir.exists():
             return
 
-        for md_path in kb_dir.glob("*.md"):
+        for md_path in sorted(kb_dir.rglob("*.md")):
+            if "assets" in md_path.relative_to(kb_dir).parts:
+                continue
             entry = parse_entry(md_path, self._config.repo_root)
             if entry:
                 self._entries[entry.path] = entry

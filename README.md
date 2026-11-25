@@ -56,7 +56,7 @@ Done. Your AI agent now has access to `kb_search`, `kb_list`, `kb_read`, `kb_add
 
 ## Knowledge Model
 
-Flat knowledge graph: every entry is `knowledge/{slug}.md`.
+Knowledge graph: every entry is `knowledge/{domain}/{topic}/{slug}.md`. Do not add new entries directly under `knowledge/`.
 
 ```yaml
 ---

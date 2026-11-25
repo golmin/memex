@@ -8,7 +8,7 @@ You are working on a personal knowledge base repository. Your task is to add, up
 
 # Entry Format
 
-Every entry is a single Markdown file at `knowledge/{slug}.md` where slug is lowercase-hyphenated derived from the title.
+Every entry is a single Markdown file under `knowledge/{domain}/{topic}/{slug}.md`. Do not put new entries directly in `knowledge/`. Slug is lowercase-hyphenated derived from the title. The entry path is `/knowledge/{domain}/{topic}/{slug}.md`.
 
 ## Frontmatter Schema (YAML)
 
@@ -64,7 +64,12 @@ Optional fields: `updated`, `edges`, `sources`.
 ```
 
 ### note
-Free format, no required sections.
+
+工程档案用 `type: note`。一条只记一个技术判断，业务场景留在标题和「问题」里供检索。正文五段：问题、卡点、解决思路、关键位置、以后怎么用。没有内容的段不要留空标题。
+
+卡点和解决思路写机制：数据从哪来、和哪个值比、空和 0 会变成什么、控制流在哪断开、为什么另一条路会误导。类名和方法名放在「关键位置」，不要把「改了哪个方法」当成正文。判断要落在具体机制上，不要写成空泛原则，也不要写成验收清单。
+
+和这条结论对应的项目说明用 `type: reference` 放在同一主题目录。笔记链过去，不要把说明正文再抄进笔记。说明里的手机号、车牌、订单号、密钥值要抹掉。
 
 These section templates are guidelines — short entries may skip sections. Never create empty sections.
 
