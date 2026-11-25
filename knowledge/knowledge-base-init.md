@@ -4,6 +4,10 @@ type: note
 summary: "Memex 知识库已接入 Cursor，后续任务总结将自动沉淀到这里。"
 tags: [memex]
 created: "2026-11-25"
+edges:
+  - path: /knowledge/memex-setup-lessons.md
+    label: about
+    description: "接入过程中的密钥、GitHub 登录和规则放置经验"
 ---
 
 Memex 知识库已接入 Cursor，后续任务总结将自动沉淀到这里。
